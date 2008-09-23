@@ -1,8 +1,0 @@
-gestion achat batiments
-idem pour unites
-
-a faire
-notion de droits pour acceder à construction/recrutement d'un batiment/unite
-
-
-
