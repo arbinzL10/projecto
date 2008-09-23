@@ -1,0 +1,264 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+-- 
+-- Serveur: localhost
+-- Généré le : Samedi 16 Août 2008 à 23:39
+-- Version du serveur: 4.1.9
+-- Version de PHP: 4.3.10
+-- 
+-- Base de données: `jeu`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `batiments`
+-- 
+
+CREATE TABLE `batiments` (
+  `id` int(10) unsigned NOT NULL default '0',
+  `nom` varchar(255) default NULL,
+  `description` varchar(255) default NULL,
+  `cout_or` int(11) default NULL,
+  `cout_bois` int(11) NOT NULL default '0',
+  `cout_pierre` int(11) NOT NULL default '0',
+  `cout_gemme` int(11) NOT NULL default '0',
+  `cout_cristaux` int(11) NOT NULL default '0',
+  `cout_souffre` int(11) NOT NULL default '0',
+  `pv` int(10) unsigned zerofill default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Contenu de la table `batiments`
+-- 
+
+INSERT INTO `batiments` VALUES (0, 'chateau', NULL, 1000, 500, 600, 0, 0, 0, 0000000500);
+INSERT INTO `batiments` VALUES (2, 'caserne', NULL, 500, 200, 230, 0, 0, 0, 0000000200);
+INSERT INTO `batiments` VALUES (1, 'forge', 'c''est une forge', 300, 0, 150, 0, 0, 0, 0000000100);
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `joueurs`
+-- 
+
+CREATE TABLE `joueurs` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `pseudo` varchar(255) NOT NULL default '',
+  `pass` varchar(255) default NULL,
+  `mail` varchar(255) NOT NULL default 'admin@jeu.fr',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `pseudo` (`pseudo`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+
+-- 
+-- Contenu de la table `joueurs`
+-- 
+
+INSERT INTO `joueurs` VALUES (7, 'silk', 'lilalice', 'admin@jeu.fr');
+INSERT INTO `joueurs` VALUES (13, 'sdf', 'sdf', 'admin@jeu.fr');
+INSERT INTO `joueurs` VALUES (14, 'pouet', 'pouet', 'admin@jeu.fr');
+INSERT INTO `joueurs` VALUES (17, 'blabla', 'df5ea29924d39c3be8785734f13169c6', 'blabla@blabla.com');
+INSERT INTO `joueurs` VALUES (38, 'kirub', 'df5ea29924d39c3be8785734f13169c6', 'blabla@blabla.com');
+INSERT INTO `joueurs` VALUES (39, 'blabla3', 'df5ea29924d39c3be8785734f13169c6', 'blabla@blabla.com');
+INSERT INTO `joueurs` VALUES (32, 'as', 'f970e2767d0cfe75876ea857f92e319b', 'as@as.com');
+INSERT INTO `joueurs` VALUES (34, 'd', '8277e0910d750195b448797616e091ad', 'd@d.com');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `map`
+-- 
+
+CREATE TABLE `map` (
+  `id` int(11) NOT NULL auto_increment,
+  `joueur_id` int(11) NOT NULL default '0',
+  `name` varchar(255) default NULL,
+  `path` varchar(255) default NULL,
+  `x` int(11) NOT NULL default '0',
+  `y` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='table contenant les maps des joueurs généré auto à la cr' AUTO_INCREMENT=15 ;
+
+-- 
+-- Contenu de la table `map`
+-- 
+
+INSERT INTO `map` VALUES (1, 6, 'map2', 'C:/Program Files/EasyPHP1-8/www/ressources/map2.png', 0, 0);
+INSERT INTO `map` VALUES (8, 32, 'blabla', 'C:/Program Files/EasyPHP1-8/www/ressources/as.png', 0, -1);
+INSERT INTO `map` VALUES (9, 34, 'd', 'C:/Program Files/EasyPHP1-8/www/ressources/d.png', 0, 1);
+INSERT INTO `map` VALUES (10, 35, 'kamelott', 'C:/Program Files/EasyPHP1-8/www/ressources/kamelott.png', 0, -2);
+INSERT INTO `map` VALUES (11, 36, 'blabla2', 'C:/Program Files/EasyPHP1-8/www/ressources/blabla2.png', -1, -1);
+INSERT INTO `map` VALUES (12, 37, 'blabla3', 'C:/Program Files/EasyPHP1-8/www/ressources/blabla3.png', -1, -3);
+INSERT INTO `map` VALUES (13, 38, 'bla', 'C:/Program Files/EasyPHP1-8/www/ressources/bla.png', 1, -3);
+INSERT INTO `map` VALUES (14, 39, 'blabla4', 'C:/Program Files/EasyPHP1-8/www/ressources/blabla4.png', 2, -1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `possession_bat`
+-- 
+
+CREATE TABLE `possession_bat` (
+  `id_joueur` int(10) unsigned NOT NULL default '0',
+  `id_batiment` int(10) unsigned NOT NULL default '0',
+  `nombre` int(10) unsigned zerofill default '0000000000',
+  `x` int(11) default '0',
+  `y` int(11) default '0',
+  PRIMARY KEY  (`id_joueur`,`id_batiment`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Contenu de la table `possession_bat`
+-- 
+
+INSERT INTO `possession_bat` VALUES (6, 1, 0000000001, 0, 0);
+INSERT INTO `possession_bat` VALUES (6, 2, 0000000003, 0, 0);
+INSERT INTO `possession_bat` VALUES (7, 2, 0000000027, 0, 0);
+INSERT INTO `possession_bat` VALUES (7, 0, 0000000034, 0, 0);
+INSERT INTO `possession_bat` VALUES (7, 1, 0000000002, 0, 0);
+INSERT INTO `possession_bat` VALUES (0, 0, 0000000000, 0, 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `possession_ressources`
+-- 
+
+CREATE TABLE `possession_ressources` (
+  `joueur_id` int(10) unsigned NOT NULL default '0',
+  `ressources_id` int(10) unsigned NOT NULL default '0',
+  `nombre` int(10) unsigned zerofill default NULL,
+  PRIMARY KEY  (`joueur_id`,`ressources_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Contenu de la table `possession_ressources`
+-- 
+
+INSERT INTO `possession_ressources` VALUES (7, 1, 0000010000);
+INSERT INTO `possession_ressources` VALUES (7, 2, 0000009000);
+INSERT INTO `possession_ressources` VALUES (7, 3, 0000007000);
+INSERT INTO `possession_ressources` VALUES (7, 4, 0000000300);
+INSERT INTO `possession_ressources` VALUES (7, 5, 0000000500);
+INSERT INTO `possession_ressources` VALUES (7, 6, 0000000200);
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `possession_unit`
+-- 
+
+CREATE TABLE `possession_unit` (
+  `joueur_id` int(10) unsigned NOT NULL default '0',
+  `unites_id` int(10) unsigned NOT NULL default '0',
+  `nombre` int(10) unsigned zerofill default NULL,
+  `x` int(11) default '0',
+  `y` int(11) default '0',
+  PRIMARY KEY  (`joueur_id`,`unites_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Contenu de la table `possession_unit`
+-- 
+
+INSERT INTO `possession_unit` VALUES (6, 2, 0000000010, 0, 0);
+INSERT INTO `possession_unit` VALUES (6, 3, 0000000012, 0, 0);
+INSERT INTO `possession_unit` VALUES (7, 2, 0000000131, 0, 0);
+INSERT INTO `possession_unit` VALUES (7, 3, 0000000012, 0, 0);
+INSERT INTO `possession_unit` VALUES (7, 1, 0000000061, 0, 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `ressources`
+-- 
+
+CREATE TABLE `ressources` (
+  `id` int(10) unsigned NOT NULL default '0',
+  `nom` varchar(255) default NULL,
+  `description` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Contenu de la table `ressources`
+-- 
+
+INSERT INTO `ressources` VALUES (1, 'or', 'bah.. c''est de l''or');
+INSERT INTO `ressources` VALUES (2, 'bois', 'bah.. c''est du bois');
+INSERT INTO `ressources` VALUES (3, 'pierre', 'bah.. c''est de la pierre');
+INSERT INTO `ressources` VALUES (4, 'gemmes', 'bah.. c''est des gemmes');
+INSERT INTO `ressources` VALUES (5, 'cristaux', 'bah.. c''est des cristaux');
+INSERT INTO `ressources` VALUES (6, 'souffre', 'bah.. c''est du souffre');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `tiles`
+-- 
+
+CREATE TABLE `tiles` (
+  `id` int(11) NOT NULL auto_increment,
+  `nom` varchar(255) default NULL,
+  `type` varchar(255) default NULL,
+  `passthru` binary(1) NOT NULL default '0',
+  `path` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+-- 
+-- Contenu de la table `tiles`
+-- 
+
+INSERT INTO `tiles` VALUES (1, 'montagne', 'normal', 0x30, 'c:/program files/EasyPHP1-8/www/ressources/montagne.png');
+INSERT INTO `tiles` VALUES (2, 'basic', 'normal', 0x31, 'c:/program files/EasyPHP1-8/www/ressources/plaine.png');
+INSERT INTO `tiles` VALUES (3, 'foret', 'normal', 0x31, 'C:/Program Files/EasyPHP1-8/www/ressources/foret normal.png');
+INSERT INTO `tiles` VALUES (4, 'montagne 2', 'normal', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne normal2.png');
+INSERT INTO `tiles` VALUES (5, 'foret', 'neige', 0x31, 'C:/Program Files/EasyPHP1-8/www/ressources/foret neige.png');
+INSERT INTO `tiles` VALUES (6, 'montagne', 'neige', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne neige.png');
+INSERT INTO `tiles` VALUES (7, 'eau', 'normal', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/eau normal.png');
+INSERT INTO `tiles` VALUES (8, 'basic', 'desert', 0x31, 'C:/Program Files/EasyPHP1-8/www/ressources/desert.png');
+INSERT INTO `tiles` VALUES (9, 'eau', 'desert', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/eau desert.png');
+INSERT INTO `tiles` VALUES (10, 'foret', 'desert', 0x31, 'C:/Program Files/EasyPHP1-8/www/ressources/foret desert.png');
+INSERT INTO `tiles` VALUES (11, 'montagne', 'desert', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne desert.png');
+INSERT INTO `tiles` VALUES (12, 'basic', 'neige', 0x31, 'C:/Program Files/EasyPHP1-8/www/ressources/neige.png');
+INSERT INTO `tiles` VALUES (13, 'montagne 2', 'neige', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne neige2.png');
+INSERT INTO `tiles` VALUES (14, 'montagne 3', 'neige', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne neige 3.png');
+INSERT INTO `tiles` VALUES (15, 'montagne 2', 'desert', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne desert 2.png');
+INSERT INTO `tiles` VALUES (16, 'montagne 3', 'desert', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne desert3.png');
+INSERT INTO `tiles` VALUES (17, 'montagne 4', 'desert', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne desert4.png');
+INSERT INTO `tiles` VALUES (18, 'montagne 4', 'neige', 0x30, 'C:/Program Files/EasyPHP1-8/www/ressources/montagne neige 4.png');
+
+-- --------------------------------------------------------
+
+-- 
+-- Structure de la table `unites`
+-- 
+
+CREATE TABLE `unites` (
+  `id` int(11) NOT NULL auto_increment,
+  `nom` varchar(255) default NULL,
+  `description` varchar(255) default NULL,
+  `cout_or` int(11) default NULL,
+  `cout_bois` int(11) NOT NULL default '0',
+  `cout_pierre` int(11) NOT NULL default '0',
+  `cout_gemme` int(11) NOT NULL default '0',
+  `cout_cristaux` int(11) NOT NULL default '0',
+  `cout_souffre` int(11) NOT NULL default '0',
+  `attaque` int(11) unsigned zerofill default NULL,
+  `portee` int(11) unsigned zerofill default NULL,
+  `pv` int(11) unsigned zerofill default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- 
+-- Contenu de la table `unites`
+-- 
+
+INSERT INTO `unites` VALUES (1, 'ouvrier', NULL, 50, 0, 0, 0, 0, 0, 00000000000, 00000000002, 00000000005);
+INSERT INTO `unites` VALUES (2, 'guerrier', NULL, 100, 50, 10, 2, 2, 2, 00000000001, 00000000001, 00000000010);
+INSERT INTO `unites` VALUES (3, 'archer', NULL, 100, 30, 20, 1, 2, 2, 00000000001, 00000000002, 00000000010);

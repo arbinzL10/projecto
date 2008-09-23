@@ -1,0 +1,3 @@
+<?php
+echo "<div class='rollovermenu' id='rollovermenu_".$_POST['idmenu']."' onmouseover=\"erase_oldmenu();\" ><div id='rollover_submenu_1' class='rollover_submenu'><label style='color:#FFFFFF'>construire batiments</label></div><div id='rollover_submenu_1' class='rollover_submenu'><label style='color:#FFFFFF'>former unités</label></div><div id='rollover_submenu_1' class='rollover_submenu'  onclick=\"HTTPReq(new Array('type_map','option'),new Array('map_joueur','init'),'aff_map.php','main')\" ><label style='color:#FFFFFF'>map</label></div><div id='rollover_submenu_1' class='rollover_submenu'><label style='color:#FFFFFF'>sous-menu 4</label></div></div>";
+?>
