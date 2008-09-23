@@ -1,0 +1,339 @@
+/*commentaire*/
+/* ======================================================================               PAGE                     ==================================================================== */
+*{
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+	
+	}
+
+#fond{
+}
+/* ======================================================================               Entete                     ==================================================================== */
+		
+#top {
+	background-image : url(images/baniere1024.png);
+	width:1024px;
+	height : 298px;
+	}
+	#top_right{
+	position:absolute;
+	width:187px;
+	height:300px;
+	margin-left:950px;
+	margin-bottom:200px;
+	
+	}
+	#top_left{
+	position:absolute;
+	width:187px;
+	height:300px;
+	margin-top:135px;
+	margin-right:1550px;
+	}
+	#top .deco_top{
+	
+	}
+
+/* ======================================================================               menu                     ==================================================================== */	
+#middle{
+	background-color:#1f0a07;
+	width:1018px;
+	height: 780px;
+	}
+	#middle #contenu{
+	/*background-image : url(images/pianiste.gif);*/
+		height:99%;
+		width:1005px;
+		z-index:1;
+	}
+		/* =============    contenu menu    ========================= */	
+	
+		
+		
+		#contenu #ressources{
+			background-image:url(images/ressources.png);
+			height : 4%;
+			width : 100%;
+		}
+			#ressources .item{
+				width:16%;
+				height:99%;
+				float:left;			
+			}
+		
+		#contenu #menu {
+			background-image:url(images/menu.png);
+			width:100%;
+			height:12%;
+		}
+			#menu #menu_logged{
+			background-image:url(images/menu_logged.png);
+			background-repeat:no-repeat;
+			margin-right:10px;
+			float:right;
+			height:97%;
+			width:13%;
+			}
+			
+			#menu_logged .message_logged{
+			
+			width:25%;
+			height:80%;
+			}
+			#menu .log{
+				background-image:url(images/menu_log.png);
+				margin-top:-30px;
+				float:right;
+				height:200px;
+				width:16%;
+			}
+			
+			.log #login{
+			border:hidden;
+			margin-top:20px;
+			width:70%;
+
+			}
+			.log #log_in{
+			float:left;
+			margin-left:35px;
+			margin-top:0px;
+			}
+			.log #pass{
+			border:hidden;
+			margin-top:0px;
+			width:70%;
+			
+			}
+			
+			.log #register{
+			float:right;
+			margin-right:35px;
+			margin-top:0px;
+			}
+			
+			#menu .item{
+				width: 16%;	
+				height: 97%;
+				margin-left:2px;
+				color : black;
+				float:right;
+			}
+			
+			
+			.item #deconnexion{
+				text-decoration:overline;				
+			}
+		#contenu #menuChateau{
+		left:0;
+		top:0;
+		}
+		
+		#contenu #menuHero{
+		right:0;
+		top:0;
+		}
+		
+		#contenu .menuLateral{
+			width:16.8%;
+			height:83.5%;
+			margin-top:1px;
+			margin-left:1px;
+			margin-bottom:1px;
+			z-index:2;
+			position:absolute;
+		}
+			.menuLateral .next{
+				background-repeat:no-repeat;
+				background-image : url(images/next.gif);
+				height: 4%;
+				margin-top:2%;
+				margin-left:2%;
+				margin-right:2%;
+				width: 96.6%;
+			}
+			
+			.menuLateral .chateau{
+				background-repeat:no-repeat;
+				height: 13.8%;
+				margin-top:2%;
+				margin-left:2%;
+				margin-right:2%;
+				width: 96.6%;
+			}
+			
+			#chateau1{
+				background-image : url(images/chateau1.gif);
+			}
+			
+			#chateau2{
+				background-image : url(images/chateau2.gif);
+			}
+			
+			#chateau3{
+				background-image : url(images/chateau3.gif);
+			}
+			
+			#chateau4{
+				background-image : url(images/chateau4.gif);
+			}
+			
+			#chateau5{
+				background-image : url(images/chateau5.gif);
+			}
+			
+			#chateau6{
+				background-image : url(images/chateau6.gif);
+			}
+			
+			.menuLateral .hero{
+				height: 14%;
+				border:3px;
+				width: 99%;
+			}
+			
+			#hero1{
+				background-image : url(images/hero1.gif);
+			}
+			
+			#hero2{
+				background-image : url(images/hero1.gif);
+			}
+			
+			#hero3{
+				background-image : url(images/hero1.gif);
+			}
+			
+			#hero4{
+				background-image : url(images/hero1.gif);
+			}
+			
+			#hero5{
+				background-image : url(images/hero1.gif);
+			}
+			
+			#hero6{
+				background-image : url(images/hero1.gif);
+			}
+			
+	
+		#contenu #main{
+		background-color:#FFFFFF;
+			width:100%;
+			height:83.5%;			
+			position:relative;
+		}
+	
+			#main #incastle{
+				background-image : url(images/incastle.gif);
+				width: 100%;
+			}
+				
+			#main #construire{
+				background-color : red;
+				width : 400;
+				height : 50;
+				font-size : 25;
+			}
+			
+			#main .pos_info{
+			float:left;
+			margin-top:15%;
+			}
+			
+			#main #construct{
+				float:left;
+				height:4%;
+				width:80%;
+				background-color:#99FFFF;
+			}
+			
+			#construct .construct_button{
+				height: 99%;
+				margin-top:2%;
+				margin-left:2%;
+				margin-right:2%;
+				width: 15%;
+			
+			}
+			
+			#construct #item1{
+			background-image:url(images/chateau1.gif);
+			
+			}
+			
+			#main #map{
+			background-color:#006666;
+			width:43%;
+			height:70%;
+			margin-left:auto;
+			margin-right:auto;
+			}
+				
+				#map #tiles{
+				float:left;
+				margin-left:auto;
+				margin-right:auto;
+				width:auto;
+				height:auto;
+				}
+						
+			#map #flecheH{
+			margin-left:auto;
+			margin-right:auto;
+			background-repeat:no-repeat;
+			width:200px;
+			height:50px;
+			}
+			
+			#map #flecheG{
+			margin-top:15%;
+			background-repeat:no-repeat;
+			float:left;
+			}
+			
+			#map #flecheD{
+			margin-top:15%;
+			float:left;
+			background-repeat:no-repeat;
+			}
+			
+			#map #flecheB{
+			margin-left:auto;
+			margin-right:auto;
+			background-repeat:no-repeat;
+			width:200px;
+			height:50px;
+			
+			}
+		
+		/*#contenu .menuLateral{
+			width:19%;
+			height:75.5%;
+			margin-top:2px;
+			margin-left:2px;
+			margin-right:5px;
+			margin-bottom:2px;
+			background-color:#663366;
+			float:left;
+		}*/	
+#frise{
+margin-bottom:-3px;
+width:1024px;
+height:auto;
+}
+div#bottom{
+	background-image:url(images/bottom.png);
+	width:1020px;
+	height: 100px;
+}
+	
+
+	
+	
+
+
+
+
+

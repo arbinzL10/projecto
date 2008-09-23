@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<BDD> 
+    <host>localhost</host>
+    <name>jeu</contenu>
+    <login>kirub</login>
+	<password>blabla</password>
+</BDD>
