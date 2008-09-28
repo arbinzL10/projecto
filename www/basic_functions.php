@@ -4,10 +4,17 @@ function modulo($a, $b) {
 	return $a - $b * floor($a/$b);
 }
 
+//		DEPRECATED 		USE connect()
 function connect($db_name,$host,$login,$pass){
 	$db = mysql_connect($host,$login,$pass);
 	// on sélectionne la base
 	mysql_select_db($db_name,$db);
+}
+
+function connect(){
+	$db = mysql_connect($_SESSION['bdd']['host'],$_SESSION['bdd']['login'],$_SESSION['bdd']['passord']);
+	// on sélectionne la base
+	mysql_select_db($_SESSION['bdd']['name'],$db);
 }
 
 function exec_req($sql,$debug){

@@ -1,5 +1,4 @@
-<?php @session_start();
-
+<?php session_start();
 include 'basic_functions.php';
 include 'functions_nico.php';
 include 'map.php';
@@ -198,7 +197,7 @@ function file_incache($prefix){
 	include 'maintenance_temp.php';
 	$calc=0;
 	$res=false;
-    $handler = opendir("C:/Program Files/EasyPHP1-8/www/temp/");
+    $handler = opendir($_SERVER['DOCUMENT_ROOT']."/temp/");
     while ($file = readdir($handler)) { 
         if ($file != '.' && $file != '..' && $file != "robots.txt" && $file != ".htaccess"){
 			

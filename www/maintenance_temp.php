@@ -1,11 +1,10 @@
 <?php
-/* A insérer dans un fichier de config :
-	- $_SESSION['config']['temporary']['available_time'] = temps en heure de validité des images
+/* 
+		script réalisant la maintenance des fichiers présent dans le dossier /temp, suivant le temps de validité spécifié dans le fichier config.xml
 */
 
-$_SESSION['config']['temporary']['available_time']=5;
-$available_time=mktime(date("H")-$_SESSION['config']['temporary']['available_time'],date("i"),date("s"),date("m"),date("d"),date("y"));
-clean("C:/Program Files/EasyPHP1-8/www/temp/",$available_time);
+
+clean($_SERVER['DOCUMENT_ROOT']."/temp/",$_SESSION['temporary']['expire']);
 
 
 
@@ -18,7 +17,7 @@ function clean ($directory,$available_time){
         if ($file != '.' && $file != '..' && $file != "robots.txt" && $file != ".htaccess"){
             $currentModified = filectime($directory."/".$file);
 			if($currentModified <=$available_time){
-				unlink("C:/Program Files/EasyPHP1-8/www/temp/".$file);
+				unlink($_SERVER['DOCUMENT_ROOT']."/temp/".$file);
 			   	$res[$file] = $currentModified;
 			}
 			//$res[$file] = $currentModified;
@@ -33,7 +32,7 @@ function clean ($directory,$available_time){
 }
 
 function timeOfValidity(){
-	return date("r",$_SESSION['config']['temporary']['available_time']);
+	return date("r",$_SESSION['temporary']['expire']);
 }
 
 ?>

@@ -1,19 +1,19 @@
-<?php @session_start();
+<?php session_start();
 
 header ("Content-type: image/png;Pragma: no-cache");
 
  
-//print_r($_SESSION['map']['batiments']);
+//print_r($_SESSION['map']);
 /*?>
 <script>execute('maintenance_temp.php');
 </script><?php 
 */$map_id=$_GET['id'];
-if(!file_exists("C:/Program Files/EasyPHP1-8/www/temp/".$map_id)){
+if(!file_exists($_SERVER['DOCUMENT_ROOT']."/temp/".$map_id)){
 $i=0;
 $j=0;
 $a=0;
 //$path='"'.$get.'"';//.$name";
-$im=imagecreatefrompng("C:/Program Files/EasyPHP1-8/www/ressources/plaine.PNG");
+$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/plaine.PNG");
 if(strpos($map_id,"map_monde")!=FALSE){
 	$im2=imagecreatetruecolor(8,8);
 	$image=imagecreatetruecolor(8*$_SESSION['map']['width'],8*$_SESSION['map']['height']);
@@ -49,8 +49,8 @@ foreach($_SESSION['map']['compo'] as $key => $value){
 			  
 			  
 			
-			if($value!='C:/Program Files/EasyPHP1-8/www/ressources/plaine.PNG' && $paintTile==true){
-				$im=imagecreatefrompng($value);
+			if($value!=$_SERVER['DOCUMENT_ROOT'].'/ressources/plaine.PNG' && $paintTile==true){
+				$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT'].$value);
 				$tile_square=array(
 										$a*16		,	$i*16,
 										$a*16		,	($i+1)*16,
@@ -92,7 +92,7 @@ foreach($_SESSION['map']['compo'] as $key => $value){
 
 if(strpos($map_id,"map_monde")==FALSE && $_SESSION['map']['batiments']!=NULL){					
 foreach($_SESSION['map']['batiments'] as $key => $value){
-	$im=imagecreatefrompng($_SESSION['map']['batiments'][$key]['path']);
+	$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT'].$_SESSION['map']['batiments'][$key]['path']);
 	
 	
 	for($i=0;$i<$_SESSION['map']['batiments'][$key]['height'];$i++){
@@ -106,7 +106,7 @@ foreach($_SESSION['map']['batiments'] as $key => $value){
 			//$im3=imagecreatefrompng("C:/Program Files/EasyPHP1-8/www/ressources/plaine.PNG");
 			//imagesettile($image,$im2);
 			//imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
-			$im2=imagecreatefrompng("c:/program files/EasyPHP1-8/www/ressources/blank.png");
+			$im2=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/blank.png");
 			$transp=imagecolorallocate($im,0,0,0);
 			imagecolortransparent($im,$transp);
 			
@@ -135,11 +135,11 @@ foreach($_SESSION['map']['batiments'] as $key => $value){
 						($_SESSION['map']['batiments'][$key]['x']+1+floor($_SESSION['map']['batiments'][$key]['width']/2))*16 	,	($_SESSION['map']['batiments'][$key]['y']-$_SESSION['map']['batiments'][$key]['height']+1)*16
 $transp = imagecolorallocate($im, 0, 0, 0);
 imagecolortransparent($im, $transp);*/
-imagejpeg($image,"C:/Program Files/EasyPHP1-8/www/temp/".$map_id);
+imagejpeg($image,$_SERVER['DOCUMENT_ROOT']."/temp/".$map_id);
 //imagepng($image);
 imagedestroy($image);
 }
-$im=imagecreatefromjpeg("C:/Program Files/EasyPHP1-8/www/temp/".$map_id);
+$im=imagecreatefromjpeg($_SERVER['DOCUMENT_ROOT']."/temp/".$map_id);
 imageinterlace($im,1);
 imagejpeg($im);
 imagedestroy($im);

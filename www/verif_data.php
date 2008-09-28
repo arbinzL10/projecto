@@ -1,5 +1,7 @@
  <?php
- 	@session_start();
+ 	
+	session_start();
+	
 	include 'basic_functions.php';
      if(!empty($_POST['pseudo']))
      {

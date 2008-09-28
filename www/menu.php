@@ -2,7 +2,12 @@
 <!-- 						MENU A INCLURE DANS CONTENT.PHP 									  -->
 <!--______________________________________________________________________________________________-->
 
-<?php @session_start();?>
+<?php 
+
+//session_start();
+
+?>
+
 <SCRIPT language="JavaScript">InitBulle("navy","#FFCC66","orange",1);
 // InitBulle(couleur de texte, couleur de fond, couleur de contour taille contour)
 </SCRIPT>

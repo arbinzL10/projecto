@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<BDD> 
-    <host>localhost</host>
-    <name>jeu</contenu>
-    <login>kirub</login>
-	<password>blabla</password>
-</BDD>
+<config>
+	<bdd host='localhost' name='jeu' login='root' password='' />
+	<documentroot path='C:/Program Files/EasyPHP 2.0b1/www/' />
+	<temporary expire='1222551769' />
+</config>

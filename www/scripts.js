@@ -397,7 +397,8 @@
 		} 
 		
 		xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
-		
+		xhr_object.setRequestHeader("Set-Cookie", "PHPSESSID="+sid); 
+
 		xhr_object.send(varToSend);		
 		
 		//sendData('current_content='+iddiv, 'bataille.php', 'POST');

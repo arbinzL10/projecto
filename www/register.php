@@ -5,7 +5,7 @@
          <table>
 			 <tr><td> Pseudo :</td><td><input id="pseudo" type="text" name="pseudo" onKeyUp="verifData('pseudo','l_pseudo','pseudo')" value=<?php echo '"'.$_POST['register'][0].'"';?>/></td><td><label id="l_pseudo"></label></td></tr>
 			
-			<tr><td> Mot de passe :</td><td><input onKeyUp="HTTPReq(new Array('register[0]','register[1]'),new Array('id=pass1','id=pass2'),'verif_data.php','l_password')" id="pass1" type="password" name="password1" value=<?php echo $_POST['register'][1] ;?> /></td></tr><td><label id="l_password"></label></td></tr>
+			<tr><td> Mot de passe :</td><td><input onKeyUp="HTTPReq(new Array('register[0]','register[1]'),new Array('id=pass1','id=pass2'),'verif_data.php','l_password')" id="pass1" type="password" name="password1" value=<?php echo $_POST['register'][1] ;?> /></td><td><label id="l_password"></label></td></tr>
 	
 			<tr><td>Confirmer mot de passe :</td><td><input onKeyUp="HTTPReq(new Array('register[0]','register[1]'),new Array('id=pass1','id=pass2'),'verif_data.php','l_password')" id="pass2"  type="password" name="password2" value=<?php echo $_POST['register'][1] ;?> /></td><td><label id="l_pass"></label></td></tr>
 	

@@ -1,4 +1,7 @@
-<?php	@session_start();
+<?php	
+
+//session_start();
+
 function parseMap($tiles,$map,$type_map,$x,$y){
 	unset($res2,$res);
 	$taille=getMapSize();

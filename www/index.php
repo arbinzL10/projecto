@@ -1,4 +1,8 @@
 <?php	session_start(); 
+echo "<script lanuage='javascript'>
+var sid='".session_id()."';
+</script>";
+include 'config.php';
 include 'scripts.js';
 include ("basic_functions.php");
 ?>
