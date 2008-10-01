@@ -1,6 +1,6 @@
 <SCRIPT language="JavaScript">
 	var haloChateauTemp=null;
-	
+	var nbUnit=new Array();
 	var offsetMenuChateau=0;
 	var haloHero=null;
 	var haloHeroOld=null;
@@ -9,6 +9,8 @@
 	var selItemOld=null;
 	var oldRect=null;
 	var oldrollovermenu=null;
+	var idTimer=new Array(null);
+	var progress=new Array();
 
 	function menu(iddiv){
 		menuEraseAll();
@@ -61,7 +63,74 @@
 		if(noeud!=null)
 			noeud.parentNode.removeChild(noeud);
 	}
-	
+	function trainUnit(id){
+		if(nbUnit[id]>0){
+			nbUnit[id]--;
+			HTTPReq(new Array('id_unit','nb'),new Array("'"+id+"'",'1'),'training_units.php','');
+		}
+		if(nbUnit[id]==0){
+			clearTimeout(idTimer[id]);
+			idTimer[id]=null;
+			document.getElementById("unit_"+id).innerHTML='';
+		}
+		showUnit(id);
+		
+	}
+	function progressTraining(id,interval){
+		if(nbUnit[id]>0){
+			var new_width=100-progress[id];
+			if(document.getElementById("unit_overglass_"+id))
+				document.getElementById("unit_overglass_"+id).style.width=new_width+"%";
+			else{
+				var element=document.createElement("img");
+				element.id="unit_overglass_"+id;
+				element.src="images/encadrement-mini.png";
+				element.style.height="59px";				
+				element.style.width=new_width+"%";
+				element.style.marginRight="0px";
+				document.getElementById("unit_"+id).appendChild(element);
+			}
+			progress[id]++;
+		}
+		if(progress[id]>=100){
+			progress[id]=0;
+			trainUnit(id);
+		}
+	}
+	function timer(id,interval){
+		idTimer[id]=setInterval("progressTraining("+id+","+interval+")",interval/100);			
+	}
+	function addUnit(id,interval){
+			if(nbUnit[id]!=null){
+				nbUnit[id]++;
+			}
+			else{
+				progress[id]=0;
+				nbUnit[id]=1;
+			}
+			document.getElementById("label_div_"+id).style.width="20px";
+			document.getElementById("label_div_"+id).style.visibility="visible";
+
+			showUnit(id);
+			if(idTimer[id]==null){
+				timer(id,interval);
+			}
+				
+	}
+	function showUnit(id){
+		document.getElementById("label_div_"+id).innerHTML='';
+		if(nbUnit[id]>0){
+			var element=document.createElement("label");
+			element.className="nb_unit";
+			element.style.fontSize="24px";
+			element.style.color="#FF0000";
+			document.getElementById("label_div_"+id).appendChild(element);
+			element.appendChild(document.createTextNode(nbUnit[id]));
+		}else{
+			document.getElementById("label_div_"+id).style.width="0px";
+			document.getElementById("label_div_"+id).style.visibility="hidden";
+		}
+	}
 	function setHaloItem() {
 		if(selItemOld!=null){
 			document.getElementById(selItemOld).innerHTML='';
@@ -391,7 +460,7 @@
 					eval(xhr_object.responseText);
 				if(where=='<cache>')
 					document.write(xhr_object.responseText);
-				else
+				if(where!='null' && where!='')
 					insertPage(where,xhr_object.responseText);
 			}
 		} 

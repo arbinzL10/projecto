@@ -3,7 +3,7 @@
 header ("Content-type: image/png;Pragma: no-cache");
 
  
-//print_r($_SESSION['map']);
+//print_r($_SESSION['map']['batiments']);
 /*?>
 <script>execute('maintenance_temp.php');
 </script><?php 
@@ -77,7 +77,7 @@ foreach($_SESSION['map']['compo'] as $key => $value){
 					imagecolortransparent($im, $transp);
 				}
 				imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
-				if(isset($_GET['option']) && $_GET['option']=='quad')
+				if(isset($_SESSION['map']['option']) && $_SESSION['map']['option']=='quad')
 					imagerectangle($image,$a*16,$i*16,($a+1)*16,($i+1)*16,imagecolorallocate($image,0,0,255));
 				imagedestroy($im);
 				if(strpos($map_id,"map_monde")!=FALSE)

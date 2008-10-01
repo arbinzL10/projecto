@@ -139,25 +139,24 @@ function affListUnit($liste){
 }
 
 //==============================================================     fonction permettant de recruter des unités        =======================================================
-function recruter($idj, $idu, $nb){
-	echo "id_joueur : ".$idj." <br>id_unite : ".$idu."<br>nombre : ".$nb."<br>";
+function recruter($idu, $nb){
 	connexion();
-	$nb = min($nb, getMaxUnit($idj, $idu)); //calcul du max recrutable
-	$req = "SELECT nombre FROM possession_unit WHERE joueur_id='".$idj."' AND unites_id='".$idu."'";
+	/*$nb = min($nb, getMaxUnit($idj, $idu)); //calcul du max recrutable
+	$req = "SELECT nombre FROM possession_unit WHERE joueur_id='".$_SESSION['identify']['id']."' AND unites_id='".$idu."'";
 	$res = mysql_query($req);
 	$old = mysql_fetch_assoc($res);
 	$oldnb = (int)$old['nombre'];
 	//test si type d'unite deja present
-	if ($oldnb==0){
-		$req2 = "INSERT INTO possession_unit (joueur_id , unites_id ,nombre, x, y) VALUES('".$idj."' ,'".$idu."' ,'".$nb."','0','0')";
-	}else{
+	if ($oldnb==0){*/
+		$req2 = "INSERT INTO possession_unit (joueur_id , id_unit ,nombre, x, y) VALUES(".$_SESSION['identify']['id']." ,$idu ,$nb,0,0) ON DUPLICATE KEY UPDATE nombre=nombre+$nb";
+	/*}else{
 		$newnb=$oldnb +$nb;
 		$req2 = "UPDATE possession_unit SET nombre ='".$newnb."' WHERE joueur_id='".$idj."' AND unites_id='".$idu."'";
-	}
-	payerUnit($idj,$idu, $nb);
-	echo "nb : ".$nb."<br>oldnb : ".$oldnb."<br>newnb : ".$newnb."<br>";
-	$res2 = mysql_query($req2);
-	mysql_close();
+	}*/
+	//payerUnit($_SESSION['identify']['id'],$idu, $nb);
+	//echo "nb : ".$nb."<br>oldnb : ".$oldnb."<br>newnb : ".$newnb."<br>";
+	$res2 = mysql_query($req2) or die($req2." ".mysql_error());
+//	mysql_close();
 }
 
 //=======================================================         fonction calculant le nombre max d'unite recrutable        =====================================================

@@ -4,20 +4,28 @@ function modulo($a, $b) {
 	return $a - $b * floor($a/$b);
 }
 
-//		DEPRECATED 		USE connect()
+/*		DEPRECATED 		USE connect()
 function connect($db_name,$host,$login,$pass){
 	$db = mysql_connect($host,$login,$pass);
 	// on sélectionne la base
 	mysql_select_db($db_name,$db);
-}
+}*/
 
 function connect(){
-	$db = mysql_connect($_SESSION['bdd']['host'],$_SESSION['bdd']['login'],$_SESSION['bdd']['passord']);
+	$db = mysql_connect($_SESSION['bdd']['host'],$_SESSION['bdd']['login'],$_SESSION['bdd']['password']);
 	// on sélectionne la base
 	mysql_select_db($_SESSION['bdd']['name'],$db);
+	$_SESSION['bdd']['connected']=true;
+}
+
+function isConnected(){
+	if(isset($_SESSION['bdd']['connected']))
+		return true;
+	return false;
 }
 
 function exec_req($sql,$debug){
+	connect();
 	$req=mysql_query($sql); 
 	if($debug==1)
 		die($sql.' <br/>			'.mysql_error());
@@ -46,7 +54,7 @@ function VerifierAdresseMail($adresse)
    else
    		return false;
 }
-
+/*
 function afficheMap(){
 connect('jeu','localhost','root','');
 	
@@ -68,7 +76,7 @@ connect('jeu','localhost','root','');
 
 }
 
-
+*/
 
 
 ?>

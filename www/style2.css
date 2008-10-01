@@ -254,10 +254,11 @@
 			
 	
 		#contenu #main{
-		background-color:#FFFFFF;
+			background-color:#FFFFFF;
 			width:100%;				/*1005px*/
 			height:83.5%;			/*644px*/
 			position:relative;
+			overflow:auto;
 		}
 	
 			#main #incastle{
@@ -277,41 +278,108 @@
 			margin-top:15%;
 			}
 			
-			#main #mini_menu_construct{
+			#main #cite_frame{
+			border:double #999999;
+			float:right;
+			height:70%;
+			width:30%;
+			}
+				#cite_frame .div_citeframe_item{
+				margin-top:10px;
+				}
+								
+					.div_citeframe_item .plus{
+					margin-left:5px;
+					margin-top:-5px;
+					background-color:#CCCCCC;
+					border:double;
+					width:5%;
+					float:left;
+					}
+			
+			#main #menu_construct_global{
+			margin-top:5px;
+			float:left;
+			height:25%;
+			width:98%;
+			
+			}
+				
+				#menu_construct_global #div_onglet{
+				width:auto;
+				height:15%;
+				margin-left:8px;
+				
+				}
+					
+					#div_onglet .onglet{
+					float:left;
+					width:15%;
+					border-collapse:collapse;
+					border:groove #FFFFFF;
+
+					}
+					
+					#div_onglet #onglet_batiments{
+					background-color:#9966CC;
+					}
+					
+					#div_onglet #onglet_unit {
+					background-color:#996699;
+					}
+				
+				#menu_construct_global #mini_menu_construct{
+					border:ridge #9999CC;
+					height:80%;
+					width:98%;
+					margin-left:8px;
+					background-color:#99CCCC;
+				}
+			
+				
+				
+				#mini_menu_construct .construct_button{
+					border:3px solid;
+					border-color:#999900;
+					float:left;
+					margin-top:2%;
+					margin-left:2%;
+					width:48px;
+					height:59px;
+					background-repeat:no-repeat;
+				}
+				#mini_menu_construct .label_div{
+				visibility:hidden;
 				float:left;
-				height:4%;
-				width:80%;
-				background-color:#99FFFF;
-			}
-			
-			#mini_menu_construct .construct_button{
-				border:3px solid;
-				border-color:#999900;
-				float:left;
-				margin-top:2%;
-				margin-left:2%;
-				width:48px;
-				height:59px;
-				background-repeat:no-repeat;
-			
-			}
-			#mini_menu_construct #miniflecheG{
-				background-image:url(images/flecheG-mini.png);
-			}
-			#mini_menu_construct #miniflecheD{
-				background-image:url(images/flecheD-mini.png);
-			}
-			#mini_menu_construct #bat_0{
-			background-image:url(ressources/chateau_1.png);
-			
-			
-			}
-			#mini_menu_construct #bat_2{
-			background-image:url(ressources/Caserne.png);
-			}
-			#mini_menu_construct #bat_1{
-			background-image:url(ressources/chateau_1.png);
-			}
+				width:0px;
+				height:20px;
+				margin-right:0px;
+				}
+				#mini_menu_construct #miniflecheG{
+					background-image:url(images/flecheG-mini.png);
+				}
+				#mini_menu_construct #miniflecheD{
+					background-image:url(images/flecheD-mini.png);
+				}
+				#mini_menu_construct #batiments_0{
+				background-image:url(ressources/chateau_1.png);
+				}
+				#mini_menu_construct #batiments_2{
+				background-image:url(ressources/Caserne.png);
+				}
+				#mini_menu_construct #batiments_1{
+				background-image:url(ressources/chateau_1.png);
+				}
+				#mini_menu_construct #unit_1{
+				background-image:url(ressources/ouvrier.png);
+				}
+				#mini_menu_construct #unit_2{
+				background-image:url(ressources/guerrier.png);
+				}
+				#mini_menu_construct #unit_3{
+				background-image:url(ressources/archer.png);
+				}
+				
 			#main #menu-construction{
 			float:right;
 			width:43%;			/*432px*/
@@ -326,13 +394,23 @@
 				
 				}
 			#main #map{
-			background-color:#006666;
+			border:double #CCCCCC;
 			width:43%;
-			height:70%;
+			height:72%;
 			margin-left:auto;
 			margin-right:auto;
+			float:left;
 			}
-			
+				
+				#map #quadrillage{
+				background-color:#99FF66;
+				border:dotted #CCCCCC;
+				}
+				
+				#map #zoom{
+				background-color:#99FF66;
+				border:dotted #CCCCCC;
+				}
 				
 				
 				#map #tiles{

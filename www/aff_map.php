@@ -50,6 +50,7 @@ if(isset($_POST['type_map'] )){
 		$map_id=$res;
 	}
 		
+	/*-------------------- Switch des options ------------------------------*/
 	if(strpos($option,'force-reloading')!=false or strpos($option,'no-cache')!=false){
 		if(file_exists("C:/Program Files/EasyPHP1-8/www/temp/".$map_id))
 			unlink("C:/Program Files/EasyPHP1-8/www/temp/".$map_id);
@@ -58,6 +59,11 @@ if(isset($_POST['type_map'] )){
 	if(strpos($option,'building')==true){
 		construire($_SESSION['identify']['id'],substr($_POST['item'][0],4),$_POST['item'][1],$_POST['item'][2],$map['map_id'][0]);
 	}
+	if(strpos($option,'quad')==true)
+		$_SESSION['map']['option']='quad';
+	
+	/*----------------------------------------------------------------------*/
+
 	$_SESSION['map']['last']=$map_id;
 	
 	$temp=explode("__",$map_id);
@@ -147,12 +153,29 @@ if(isset($_POST['type_map'] )){
 			echo "<div id='flecheD' onclick=\"HTTPReq(new Array('type_map','offset[0]','offset[1]'),new Array('".$_POST['type_map']."','4','0'),'aff_map.php','tiles')\">
 				<IMG SRC=images/flecheD.png >
 			</div>
+			
 			<div id='flecheB' onclick=\"HTTPReq(new Array('type_map','offset[0]','offset[1]'),new Array('".$_POST['type_map']."','0','4'),'aff_map.php','tiles')\">
 				<IMG SRC=images/flecheB.png >
+			</div>
+		</div>
+		<div id='cite_frame'>
+			<div class='div_citeframe_item' id='l_batiment'>
+				<div class='plus'>
+					<label>+</label>
+				</div>
+				<label>batiments</label>
+			</div>
+			<div class='div_citeframe_item' id='l_unités'>
+				<div class='plus'>
+					<label>+</label>
+				</div>
+				<label>unités</label>
 			</div>
 		</div>";
 		
 		//if(isset($_POST['call_by']) and $_POST['call_by']=='castle')
+		$_POST['init']='null';
+		$_POST['type_menu']='batiments';
 		include 'mini-menu-construction.php';
 	}
 	

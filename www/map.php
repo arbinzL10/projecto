@@ -147,7 +147,7 @@ function getBat($map_id,$offset_mapx,$offset_mapy){
 		$data=NULL;
 		foreach($map_id as $key => $value){
 			if($value!=''){
-				$sql="SELECT * from possession_bat WHERE x>='$offset_mapx' and y>='$offset_mapy' and id_map=".$map_id[$key];
+				$sql="SELECT * from possession_batiments WHERE x>='$offset_mapx' and y>='$offset_mapy' and id_map=".$map_id[$key];
 				
 				$data=exec_req($sql,0);
 			}
@@ -162,7 +162,7 @@ function parseBat($bat){
 	
 	foreach($bat as $key => $value){
 		if($value!=''){
-			$sql=" SELECT path,width,height,nom FROM tiles WHERE tiles.id= (SELECT id_tile FROM batiments WHERE id=".$bat[$key]['id_batiment'].")";
+			$sql=" SELECT path,width,height,nom FROM tiles WHERE tiles.id= (SELECT id_tile FROM batiments WHERE id=".$bat[$key]['id_batiments'].")";
 			$req=mysql_query($sql) or die(mysql_error()." ".$sql);
 			$temp=mysql_fetch_assoc($req);
 			$data[$key]['path']=$temp['path'];
