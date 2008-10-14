@@ -4,7 +4,7 @@
 */
 
 
-clean($_SERVER['DOCUMENT_ROOT']."/temp/",$_SESSION['temporary']['expire']);
+//clean($_SERVER['DOCUMENT_ROOT']."/temp/",$_SESSION['temporary']['expire']);
 
 
 

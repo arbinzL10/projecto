@@ -178,6 +178,42 @@ function parseBat($bat){
 	}
 	return $data;
 }
+function getUnit($map_id,$offset_mapx,$offset_mapy){
+		$data=NULL;
+		foreach($map_id as $key => $value){
+			if($value!=''){
+				$sql="SELECT * from possession_unit WHERE x>='$offset_mapx' and y>='$offset_mapy' and id_map=".$map_id[$key];
+				
+				$data=exec_req($sql,0);
+			}
+		}
+		return $data;
+}
+
+function parseUnit($unit){
+	//$taille=getMapSize('map_joueur');
+	//$tab=array_fill(0,$taille['width']*$taille['height'],-1);
+	$data=NULL;
+	
+	foreach($unit as $key => $value){
+		if($value!=''){
+			$sql=" SELECT path,width,height,nom FROM tiles WHERE tiles.id= (SELECT id_tile FROM unit WHERE id=".$unit[$key]['id_unit'].")";
+			$req=mysql_query($sql) or die(mysql_error()." ".$sql);
+			$temp=mysql_fetch_assoc($req);
+			$data[$key]['path']=$temp['path'];
+			$data[$key]['x']=$unit[$key]['x'];
+			$data[$key]['y']=$unit[$key]['y'];
+			$data[$key]['name']=$temp['nom'];
+			//$sql="SELECT width,height FROM batiments WHERE id=".$bat[$key]['id_batiment'];
+			//$req=mysql_query($sql);
+			//$temp=mysql_fetch_assoc($req);
+			$data[$key]['width']=$temp['width'];
+			$data[$key]['height']=$temp['height'];
+		}	
+	}
+	return $data;
+}
+
 function getMap($id_joueur,$type,$x,$y){
 	connect('jeu','localhost','root','');
 	$taille=getMapSize();

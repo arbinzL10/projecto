@@ -15,7 +15,7 @@
 	<?php 
 	if(!isIdentified()){
 	?>		
-		<div class="log">
+		<div class="notlog">
 			<input id="login" name="login" value="login" type="text" >
 			<input id="pass" name="pass" value="********" type="password" >
 			<div id="log_in" onclick="HTTPReq(new Array('log_in[0]','log_in[1]'),new Array('id=login','id=pass'),'verif_data.php','<java>')" >

@@ -80,33 +80,33 @@
 			width:25%;
 			height:80%;
 			}
-			#menu .log{
+			#menu .notlog{
 				background-image:url(images/menu_log.png);
 				margin-top:-30px;
 				float:right;
-				height:200px;
+				height:129%;
 				width:16%;
 			}
 			
-			.log #login{
+			.notlog #login{
 			border:hidden;
 			margin-top:20px;
 			width:70%;
 
 			}
-			.log #log_in{
+			.notlog #log_in{
 			float:left;
 			margin-left:35px;
 			margin-top:0px;
 			}
-			.log #pass{
+			.notlog #pass{
 			border:hidden;
 			margin-top:0px;
 			width:70%;
 			
 			}
 			
-			.log #register{
+			.notlog #register{
 			float:right;
 			margin-right:35px;
 			margin-top:0px;
@@ -296,6 +296,42 @@
 					width:5%;
 					float:left;
 					}
+				#cite_frame .title_menu_desc{
+					margin-top:5px;
+					background-color:#99FF99;
+					width:99%;
+				}
+					.title_menu_desc .title_col_menu_desc{
+						float:left;
+						margin-right:15%;					
+						background-color:#99FF99;
+					}
+					
+				#cite_frame .item_menu_desc{
+					background-color:#99FFCC;					
+					width:99%;
+				}
+				
+					.item_menu_desc .col_menu_desc{
+						float:left;
+						margin-right:15%;
+						border:solid #99FFCC;
+						border-collapse:collapse;
+					}
+					
+				#cite_frame #col_nom{
+					width:20%;
+				}
+				#cite_frame #col_pv{
+					width:8%;
+				}
+				#cite_frame #col_pos{
+					width:20%;
+				}
+				
+				#cite_frame .bottom_menu_desc{
+					margin-bottom:20px;
+				}
 			
 			#main #menu_construct_global{
 			margin-top:5px;
@@ -321,11 +357,23 @@
 					}
 					
 					#div_onglet #onglet_batiments{
-					background-color:#9966CC;
+					background-color:#9900FF;
 					}
 					
 					#div_onglet #onglet_unit {
-					background-color:#996699;
+					background-color:#9933FF;
+					}
+					
+					#div_onglet #onglet_unit_control_ouvrier {
+					background-color:#9966FF;
+					}
+					
+					#div_onglet #onglet_unit_control_guerrier {
+					background-color:#9999FF;
+					}
+					
+					#div_onglet #onglet_unit_control_ouvrier {
+					background-color:#99CCFF;
 					}
 				
 				#menu_construct_global #mini_menu_construct{
@@ -361,6 +409,10 @@
 				#mini_menu_construct #miniflecheD{
 					background-image:url(images/flecheD-mini.png);
 				}
+				
+/** @brief		ensemble des icones de construction		____________________________________________________________________**/
+/**																															**/
+/**				icones de batiments																							**/
 				#mini_menu_construct #batiments_0{
 				background-image:url(ressources/chateau_1.png);
 				}
@@ -370,6 +422,8 @@
 				#mini_menu_construct #batiments_1{
 				background-image:url(ressources/chateau_1.png);
 				}
+/**				____________________________________________________________________________________________________________**/
+/**				icones des unités																							**/
 				#mini_menu_construct #unit_1{
 				background-image:url(ressources/ouvrier.png);
 				}
@@ -379,6 +433,20 @@
 				#mini_menu_construct #unit_3{
 				background-image:url(ressources/archer.png);
 				}
+/**				____________________________________________________________________________________________________________**/
+/**				icones des actions de chaque unitée																			**/
+				#mini_menu_construct #unit_control_ouvrier_1{
+				/*background-image:url(ressources/move_ico.png);*/
+				
+				}
+				#mini_menu_construct #unit_control_ouvrier_2{
+				/*background-image:url(ressources/contruire_ico.png);*/
+				}
+				#mini_menu_construct #unit_control_ouvrier_3{
+				/*background-image:url(ressources/recolt_ico.png);*/
+				}
+/**				____________________________________________________________________________________________________________**/
+
 				
 			#main #menu-construction{
 			float:right;

@@ -50,7 +50,7 @@ function construire($idj, $idb,$x,$y,$id_map){
 	//$oldnb = (int)$old['nombre'];
 	//if ($oldnb==0){
 		//$newnb=$nb;
-		$req2 = "INSERT INTO possession_bat (id_joueur , id_batiment , x, y, id_map) VALUES('".$idj."' ,'".$idb."' ,'".$x."','".$y."','".$id_map."')";
+		$req2 = "INSERT INTO possession_batiments (id_joueur , id_batiments , x, y, id_map) VALUES('".$idj."' ,'".$idb."' ,'".$x."','".$y."','".$id_map."')";
 	/*}else{
 		$newnb=$oldnb +$nb;
 		$req2 = "UPDATE possession_bat SET nombre ='".$newnb."' WHERE id_joueur='".$idj."' AND id_batiment='".$idb."'";
@@ -58,7 +58,7 @@ function construire($idj, $idb,$x,$y,$id_map){
 	payerBat($idj,$idb/*, $nb*/);
 	//echo "nb : ".$nb."<br>oldnb : ".$oldnb."<br>newnb : ".$newnb."<br>";
 	
-	$res2 = mysql_query($req2);
+	$res2 = mysql_query($req2) or die(mysql_error()." ".$req2);
 	mysql_close();
 	//echo $req2;
 }

@@ -40,8 +40,12 @@
 	}
 	
 	function insertBalisesById(id,content) {
-		var balise=document.getElementById(id);
-		balise.innerHTML=content;		
+		if(document.getElementById(id)){
+			var balise=document.getElementById(id);
+			balise.innerHTML=content;
+		}
+		else
+			alert(document.getElementById(id));
 	}
 	function setHalo(e) {
 		var source=( document.all)?event.srcElement : e.target;
@@ -131,6 +135,10 @@
 			document.getElementById("label_div_"+id).style.visibility="hidden";
 		}
 	}
+	function actionUnit(id_action){
+		selEffItem='unit_'+id_action;
+	}
+	
 	function setHaloItem() {
 		if(selItemOld!=null){
 			document.getElementById(selItemOld).innerHTML='';
@@ -308,6 +316,21 @@
 		//xhr_object.setRequestHeader("Content-type", header); 
 		xhr_object.send("offset="+offsetMenuChateau++);
 	}
+	
+	function rollDown(id){
+		balise=document.getElementById('l_'+id);
+		if(balise)
+			balise.innerHTML="<div class='plus' onclick=\"HTTPReq(new Array('type_map','option[0]','option[1]'),new Array('map_joueur','no-cache','show_"+id+"'),'aff_map.php','tiles');document.getElementById('menu_construct_global').innerHTML='';rollUp('"+id+"')\"><label>-</label></div><label>"+id+"</label>";		
+	}
+	function rollUp(id){
+		var textid='content'+id;
+		alert(textid);
+		document.getElementById(textid).innerHTML='';
+		balise=document.getElementById('l_'+id);
+		if(balise)
+			balise.innerHTML="<div class='plus' onclick=\"HTTPReq(new Array('type_map','option[0]','option[1]'),new Array('map_joueur','no-cache','show_"+id+"'),'aff_map.php','tiles');HTTPReq(new Array('type'),new Array('"+id+"'),'possession_desc.php','content"+id+"');rollDown('"+id+"');\"><label>+</label></div><label>"+id+"</label>";	
+	}
+	
 	function addSideMenu(url,where,idToInsert) {
 		var xhr_object = null; 
 	
@@ -382,6 +405,12 @@
 		   else
 			  return true;
 	}
+	function isString(obj) {
+		   if (obj.constructor.toString().indexOf("String") == -1)
+			  return false;
+		   else
+			  return true;
+	}
 	function HTTPReq(varToSend,id,url,where){
 	/** 
 	Utilisation:
@@ -398,29 +427,27 @@
 		var var_to_send;
 		for(i=0;i<varToSend.length;i++){
 			if(i==0){
-				if(id!=null){
-					
-					if(id[i].substr(0,3)=='id=')
+				if(id[i]!=null){
+					if(id[i].substr(0,3)=='id=' )
 						var_to_send=varToSend[i]+'='+document.getElementById(id[i].substring(3)).value;
 					else
 						var_to_send=varToSend[i]+'='+id[i];
-					
 				}
 				else
-					var_to_send=varToSend+'=null';
+					var_to_send+=varToSend[i]+'=null';
 			}else{
-				if(id!=null){
-					
-					if(id[i].substr(0,3)=='id=')
+				if(id[i]!=null){
+					if(id[i].substr(0,3)=='id=' )
 						var_to_send+='&'+varToSend[i]+'='+document.getElementById(id[i].substring(3)).value;
 					else
 						var_to_send+='&'+varToSend[i]+'='+id[i];
 					
 				}
 				else
-					var_to_send=varToSend+'=null';
+					var_to_send+='&'+varToSend[i]+'=null';
 			}
 		}
+		alert(var_to_send);
 		sendData(var_to_send,url,where);
 	}/*function HTTPReq(varToSend,id,url,where){
 	var var_to_send;
