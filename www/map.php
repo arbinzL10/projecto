@@ -5,9 +5,10 @@
 function parseMap($tiles,$map,$type_map,$x,$y){
 	unset($res2,$res);
 	$taille=getMapSize();
-	$res='';
+	$res=array();
 	$a=0;
 	$b=0;
+	$compteur_tile=0;
 	foreach($map as $key3 => $value3){
 		for($j=0;$j<$taille['height'];$j++){
 			foreach($map[$key3] as $key => $value){
@@ -18,8 +19,13 @@ function parseMap($tiles,$map,$type_map,$x,$y){
 				if($type_map=='map_joueur')
 				{
 					if($x==0 && $y==0){
-						if($j==0)
+						if($j==0){
 							$res=explode("-",$map[$key3][$key]['compo']);
+							foreach($res as $key4 => $value4){
+								$res2[$key4]=$map[$key3][$key]['joueur_id'];
+							}
+							
+						}
 					}
 					else
 					{
@@ -104,26 +110,38 @@ function parseMap($tiles,$map,$type_map,$x,$y){
 							$res=explode("-",$map[$key]['compo']);*/
 						if($j>=$offsety && $j<$nbligne){
 							$chaine=explode("-",$map[$key3][$key]['compo']);
-						
 							$temp=array_slice($chaine,$startx,$longueur);
-						
+							//foreach($temp as $value)
+
+							$res=array_merge($res,$temp);
+							foreach($res as $key4 => $value4 ){
+								//echo "[$key4]=".$map[$key3][$key]['joueur_id'].' ';
+								if($key4<=$longueur-1)
+									$res2[$compteur_tile++]=$map[$key3][$key]['joueur_id'];
+							}
+							//echo "<br /><br />";
+
+
 							
-							$res=array_merge($res,$temp);	
 							$a++;
 						}
-					}
-				}		
-			}	
+					}					
+				}	
+			}
+				
 		}
 		$b++;
 	}
+								
 	$i=0;
-	foreach($res as $value2){
+	foreach($res as $key6 => $value2){
 		if($value2!=''){
-			@$res2[$i++]=$tiles[$value2]['path'];
+			@$res3[$i]['compo']=$tiles[$value2]['path'];
+			$res3[$i]['passthru']=$tiles[$value2]['passthru'];
+			$res3[$i++]['joueur_id']=$res2[$key6];
 		}	
 	}
-	return $res2;
+	return $res3;
 }
 function exportTilesTabToXml($chemin,$tiles,$x,$y){
 	$fic=fopen("./".$chemin,"a+",true);
@@ -200,15 +218,10 @@ function parseUnit($unit){
 			$sql=" SELECT path,width,height,nom FROM tiles WHERE tiles.id= (SELECT id_tile FROM unit WHERE id=".$unit[$key]['id_unit'].")";
 			$req=mysql_query($sql) or die(mysql_error()." ".$sql);
 			$temp=mysql_fetch_assoc($req);
-			$data[$key]['path']=$temp['path'];
-			$data[$key]['x']=$unit[$key]['x'];
-			$data[$key]['y']=$unit[$key]['y'];
-			$data[$key]['name']=$temp['nom'];
-			//$sql="SELECT width,height FROM batiments WHERE id=".$bat[$key]['id_batiment'];
-			//$req=mysql_query($sql);
-			//$temp=mysql_fetch_assoc($req);
-			$data[$key]['width']=$temp['width'];
-			$data[$key]['height']=$temp['height'];
+			$data[$unit[$key]['x']][$unit[$key]['y']]['path']=$temp['path'];
+			$data[$unit[$key]['x']][$unit[$key]['y']]['name']=$temp['nom'];
+			$data[$unit[$key]['x']][$unit[$key]['y']]['width']=$temp['width'];
+			$data[$unit[$key]['x']][$unit[$key]['y']]['height']=$temp['height'];
 		}	
 	}
 	return $data;
@@ -277,7 +290,7 @@ function getMap($id_joueur,$type,$x,$y){
 	if($data[0]!=''){	
 		foreach($data as $key => $value){
 			if($value!='')
-				$res['tiles_id'][$data[$key]['y']][$data[$key]['x']]=array("compo" => $data[$key]['compo']);
+				$res['tiles_id'][$data[$key]['y']][$data[$key]['x']]=array("compo" => $data[$key]['compo'],"joueur_id" => $data[$key]['joueur_id']);
 				$res['map_id'][]=$data[$key]['id'];
 		}
 	}else

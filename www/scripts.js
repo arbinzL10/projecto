@@ -6,6 +6,8 @@
 	var haloHeroOld=null;
 	var selItem=null;
 	var selEffItem=null;
+	var selEffItemX=null;
+	var selEffItemY=null;
 	var selItemOld=null;
 	var oldRect=null;
 	var oldrollovermenu=null;

@@ -2,6 +2,7 @@
 include 'maintenance_temp.php';
 include 'basic_functions.php';
 include 'functions_nico.php';
+include 'pathfinding.php';
 include 'map.php';
 
 if(isset($_POST['type_map'] )){
@@ -13,6 +14,7 @@ if(isset($_POST['type_map'] )){
 		$_SESSION['map']['option']['quad']=false;
 		$_SESSION['map']['show_batiments']=false;
 		$_SESSION['map']['show_unit']=false;
+		unset($_SESSION['map']['chemin']);
 		$_SESSION['map']['y']=0;
 		$_SESSION['map']['x']=0;?>
 		<script language="javascript">
@@ -65,13 +67,16 @@ if(isset($_POST['type_map'] )){
 	
 	if(strpos($option,'building')==true){
 		if($_POST['item'][0]!='null')
-			if(strpos($_POST['item'][0],'unit')!=false){
-				if(substr($_POST['item'][0],6)=='1')
-					move($_SESSION['identify']['id'],substr($_POST['item'][0],6),$_POST['item'][1],$_POST['item'][2]);
-				if(substr($_POST['item'][0],6)=='2')
-					construire($_SESSION['identify']['id'],substr($_POST['item'][0],6),$_POST['item'][1],$_POST['item'][2]);
-				if(substr($_POST['item'][0],6)=='3')
-					recolter($_SESSION['identify']['id'],substr($_POST['item'][0],6),$_POST['item'][1],$_POST['item'][2]);
+			if(substr($_POST['item'][0],0,4)=='unit'){
+				if(substr($_POST['item'][0],13)=='move'){
+					$path=plusCourtChemin(new noeud($_SESSION['map']['unitselected']['x'],$_SESSION['map']['unitselected']['y'],1,null),new noeud($_POST['item'][1],$_POST['item'][2],1,null),$_SESSION['map']['desc'],$_SESSION['map']['width']);
+					$_SESSION['map']['chemin']=unserialize($path);
+				}
+					//move($_SESSION['identify']['id'],substr($_POST['item'][0],6),$_POST['item'][1],$_POST['item'][2]);
+				//if(substr($_POST['item'][0],6)=='2')
+					//construire($_SESSION['identify']['id'],substr($_POST['item'][0],6),$_POST['item'][1],$_POST['item'][2]);
+				//if(substr($_POST['item'][0],6)=='3')
+					//recolter($_SESSION['identify']['id'],substr($_POST['item'][0],6),$_POST['item'][1],$_POST['item'][2]);
 			}
 			else
 				construire($_SESSION['identify']['id'],substr($_POST['item'][0],10),$_POST['item'][1],$_POST['item'][2],$map['map_id'][0]);
@@ -139,6 +144,7 @@ if(isset($_POST['type_map'] )){
 					foreach($_SESSION['tiles'][$key] as $key2 => $value2){
 						if($key2!=''){
 							$_SESSION['tiles'][$_SESSION['tiles'][$key][$key2]['id']]['path']=$_SESSION['tiles'][$key][$key2]['path'];
+							$_SESSION['tiles'][$_SESSION['tiles'][$key][$key2]['id']]['passthru']=$_SESSION['tiles'][$key][$key2]['passthru'];
 						}
 					}
 				}
@@ -146,7 +152,7 @@ if(isset($_POST['type_map'] )){
 				if(isset($_SESSION['map']['compo']))
 					unset($_SESSION['map']['compo']);
 					
-				$_SESSION['map']['compo']=parseMap($_SESSION['tiles'],$map['tiles_id'],$_POST['type_map'],$_SESSION['map']['x'],$_SESSION['map']['y']);
+				$_SESSION['map']['desc']=parseMap($_SESSION['tiles'],$map['tiles_id'],$_POST['type_map'],$_SESSION['map']['x'],$_SESSION['map']['y']);
 				//$_SESSION['map']['joueur_id']=$map['joueur_id'];
 				$_SESSION['map']['width']=$mapsize['width'];
 				$_SESSION['map']['height']=$mapsize['height'];
@@ -198,27 +204,18 @@ if(isset($_POST['type_map'] )){
 								}
 							}
 						}
-						if($_SESSION['map']['unit']!=NULL && $isBuildable){
-							foreach( $_SESSION['map']['unit'] as $key => $value ){	
-								//echo ($value['x']-floor($value['width']/2)).",".($value['x']+floor($value['width']/2)).",".($value['y']-(floor($value['height']/2))).",".($value['y']+1)."<br />";								
-								$type_menu='';
-								if( ($value['x']==$i) && ($value['y']==$j) ){
-									//echo "non constructible: $i , $j<br />";
-									if($_SESSION['map']['unit'][$key]['name']=='ouvrier')
-										$type_menu='unit_control_ouvrier';
-									if($_SESSION['map']['unit'][$key]['name']=='guerrier')
-										$type_menu='unit_control_guerrier';
-									if($_SESSION['map']['unit'][$key]['name']=='archer')
-										$type_menu='unit_control_archer';
-									$isBuildable=false;
-									
-								}
-							}
+						if(isset($_SESSION['map']['unit'][$x][$y])){
+							$isBuildable=false;
+							$type_menu='unit_control_'.$_SESSION['map']['unit'][$x][$y]['name'];
 						}
+						
 						if($isBuildable)
-							echo "<area id='rect__".$i."_".$j."' shape='rect' onclick=\"HTTPReq(new Array('option[0]','option[1]','type_map','item[0]','item[1]','item[2]'),new Array('building','no-cache','map_joueur',selEffItem,'".$i."','".$j."'),'aff_map.php','tiles');\" coords='".($i*16).",".($j*16).",".(($i+1)*16).",".(($j+1)*16)."' >";
-						else
-							echo "<area id='rect__".$i."_".$j."' shape='rect' onclick=\"HTTPReq(new Array('type_menu','init','reload','change_onglet'),new Array('$type_menu','true','true','true'),'mini-menu-construction.php','menu_construct_global');\" coords='".($i*16).",".($j*16).",".(($i+1)*16).",".(($j+1)*16)."' >";
+							echo "<area id='rect__".$i."_".$j."' shape='rect' onclick=\"HTTPReq(new Array('option[0]','option[1]','type_map','item[0]','item[1]','item[2]','item[3]','item[4]'),new Array('building','no-cache','map_joueur',selEffItem,'".$i."','".$j."',selEffItemX,selEffItemY),'aff_map.php','tiles');\" coords='".($i*16).",".($j*16).",".(($i+1)*16).",".(($j+1)*16)."' >";
+						else{
+							//echo 'unit_control_'.$_SESSION['map']['unit'][$x][$y]['name'];
+							echo "<area id='rect__".$i."_".$j."' shape='rect' onclick=\"selItemOld=null;HTTPReq(new Array('type_menu','init','reload','unit_x','unit_y'),new Array('$type_menu','true','true','$x','$y'),'mini-menu-construction.php','menu_construct_global');\" coords='".($i*16).",".($j*16).",".(($i+1)*16).",".(($j+1)*16)."' >";
+							
+						}
 					}
 				}
 				echo "	</map>
@@ -391,6 +388,7 @@ function file_incache_EX($prefix){
 
     //Sort the date array by preferred order
     return $res;
-
 }
+
+
 ?>

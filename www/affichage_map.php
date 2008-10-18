@@ -1,9 +1,10 @@
 <?php session_start();
 
-header ("Content-type: image/png;Pragma: no-cache");
+//header ("Content-type: image/png;Pragma: no-cache");
 
+//include 'pathfinding.php';
  
-//print_r($_SESSION['map']['batiments']);
+//print_r($_SESSION['map']['desc']);
 /*?>
 <script>execute('maintenance_temp.php');
 </script><?php 
@@ -28,7 +29,8 @@ else{
 	imagesettile($image,$im);
 }
 imagefill($image,0,0,IMG_COLOR_TILED);
-foreach($_SESSION['map']['compo'] as $key => $value){
+foreach($_SESSION['map']['desc'] as $key => $value){
+
 		//foreach($_SESSION['map']['compo'][$key] as $value2){
 			
 			if($a>=$_SESSION['map']['width']){
@@ -64,7 +66,7 @@ foreach($_SESSION['map']['compo'] as $key => $value){
 			  
 			
 			if($value!=$_SERVER['DOCUMENT_ROOT'].'/ressources/plaine.PNG' && $paintTile==true){
-				$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT'].$value);
+				$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT'].$value['compo']);
 				$tile_square=array(
 										$a*16		,	$i*16,
 										$a*16		,	($i+1)*16,
@@ -92,14 +94,155 @@ foreach($_SESSION['map']['compo'] as $key => $value){
 				}
 				
 				imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
-				/*if($_SESSION['map']['joueur_id'][$key]!=$_SESSION['identify']['id']){
+				if($value['joueur_id']!=$_SESSION['identify']['id']){
 					$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/fog.png");
-					imagesettile($image2,$im3);
+					imagesettile($image,$im3);
 					$transp = imagecolorallocate($im3, 0, 0, 0);
 					imagecolortransparent($im3, $transp);
 					imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
 					imagedestroy($im3);
-				}*/
+				}
+				else
+				{
+				
+					$im3=NULL;
+					if(($key)%$_SESSION['map']['width']!=0 ){
+						if($_SESSION['map']['desc'][$key-1]['joueur_id']!=$_SESSION['identify']['id']){
+							if($key-($_SESSION['map']['width'])>=0){
+								if($_SESSION['map']['desc'][$key-($_SESSION['map']['width'])]['joueur_id']!=$_SESSION['identify']['id'])
+									$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_haut_gauche.png");
+							}
+							if($im3==NULL)
+							{
+								if($key<($_SESSION['map']['width']*$_SESSION['map']['height'])-$_SESSION['map']['width']){
+									if($_SESSION['map']['desc'][$key+($_SESSION['map']['width'])]['joueur_id']!=$_SESSION['identify']['id']){
+										$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_bas_gauche.png");
+									}
+								}
+								if($im3==NULL)
+								{
+									$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_gauche.png");
+								}
+								
+							}
+						}
+					}
+
+					if((1+$key)%20!=0 && $im3==NULL){														
+						if($_SESSION['map']['desc'][$key+1]['joueur_id']!=$_SESSION['identify']['id'] ){	
+
+							if($key-($_SESSION['map']['width'])>=0){
+								if($_SESSION['map']['desc'][$key-($_SESSION['map']['width'])]['joueur_id']!=$_SESSION['identify']['id']){
+									$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_haut_droite.png");
+								}
+							}
+							if($im3==NULL)
+							{
+
+								if($key<($_SESSION['map']['width']*$_SESSION['map']['height'])-$_SESSION['map']['width']){
+									if($_SESSION['map']['desc'][$key+($_SESSION['map']['width'])]['joueur_id']!=$_SESSION['identify']['id']){ 
+										$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_bas_droite.png");
+									}
+								}
+								if($im3==NULL)
+								{
+
+									$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_droite.png");
+								}
+								
+								
+							}
+						}
+					}
+					if($key>$_SESSION['map']['width'] && $im3==NULL){
+						if($_SESSION['map']['desc'][$key-($_SESSION['map']['width'])]['joueur_id']!=$_SESSION['identify']['id']){
+							$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_haut.png");
+						}
+					}
+					if($key<($_SESSION['map']['width']*$_SESSION['map']['height'])-$_SESSION['map']['width'] && $im3==NULL){
+						if($_SESSION['map']['desc'][$key+($_SESSION['map']['width'])]['joueur_id']!=$_SESSION['identify']['id']){
+							$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/territoire_limite_bas.png");
+						}
+					}
+					if($im3!=NULL){
+						imagesettile($image,$im3);
+						$transp = imagecolorallocate($im3, 0, 0, 0);
+						imagecolortransparent($im3, $transp);
+						imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
+						imagedestroy($im3);
+					}
+				}
+				
+				
+				if(isset($_SESSION['map']['chemin'])){
+					$path=$_SESSION['map']['chemin'];
+					if($path!=NULL){
+						$im3=NULL;
+						foreach($path as $key => $value){
+							if($value!=''){
+								if($a==$value['x'] && $i==$value['y'] ){
+									if(isset($path[$key+1])){
+										if($path[$key+1]['x'] < $a ){
+											if($path[$key+1]['y'] < $i ){
+												$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_haut_gauche.png");
+											}
+											else
+											{
+												if($path[$key+1]['y'] > $i ){
+													$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_bas_gauche.png");	
+												}
+												else
+												{
+													$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_gauche.png");
+												}
+											}
+										}
+										else
+										{
+											if($path[$key+1]['x'] > $a ){
+												if($path[$key+1]['y'] < $i ){
+													$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_haut_droite.png");
+												}
+												else
+												{
+													if($path[$key+1]['y'] > $i ){
+														$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_bas_droite.png");					
+													}
+													else
+													{
+														$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_droit.png");
+									
+													}
+												}
+											
+											}
+											else
+											{
+												if($path[$key+1]['y'] < $i ){
+													$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_haut.png");					
+												}
+												else
+												{
+													if($path[$key+1]['y'] > $i ){
+														$im3=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/move_bas.png");
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						if($im3!=NULL){
+							imagesettile($image,$im3);
+							$transp = imagecolorallocate($im3, 0, 0, 0);
+							imagecolortransparent($im3, $transp);
+							imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
+							imagedestroy($im3);
+						}
+					}
+				}
+				
 
 				if($_SESSION['map']['option']['quad']==true)
 					imagerectangle($image,$a*16,$i*16,($a+1)*16,($i+1)*16,imagecolorallocate($image,0,0,255));
@@ -107,6 +250,39 @@ foreach($_SESSION['map']['compo'] as $key => $value){
 				if(strpos($map_id,"map_monde")!=FALSE)
 					imagedestroy($im2);
 				
+				if($_SESSION['map']['unit']!=NULL){
+					if(isset($_SESSION['map']['unit'][$a][$i])){
+					//foreach($_SESSION['map']['unit'] as $key => $value){
+						$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT'].$_SESSION['map']['unit'][$a][$i]['path']);
+						
+						
+						/*$tile_square=array(
+									$_SESSION['map']['unit'][$key]['x']*16			,	$_SESSION['map']['unit'][$key]['y']*16		,
+									$_SESSION['map']['unit'][$key]['x']*16			,	($_SESSION['map']['unit'][$key]['y']+1)*16	,
+									($_SESSION['map']['unit'][$key]['x']+1)*16		,	($_SESSION['map']['unit'][$key]['y']+1)*16	,
+									($_SESSION['map']['unit'][$key]['x']+1)*16 	,	$_SESSION['map']['unit'][$key]['y']*16
+								);*/
+						//$im3=imagecreatefrompng("C:/Program Files/EasyPHP1-8/www/ressources/plaine.PNG");
+						//imagesettile($image,$im2);
+						//imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
+						$im2=imagecreatefrompng($_SERVER['DOCUMENT_ROOT']."/ressources/blank.png");
+						$transp=imagecolorallocate($im,0,0,0);
+						imagecolortransparent($im,$transp);
+						
+						imagecopyresized($im2,$im,0,0,0,0,16,16,imagesx($im),imagesy($im));
+						imagesettile($image,$im2);
+						$transp=imagecolorallocate($im2,0,0,0);
+						imagecolortransparent($im2,$transp);
+						imagefilledpolygon($image,$tile_square,4,IMG_COLOR_TILED);
+						imagedestroy($im2);
+			
+						
+						imagedestroy($im);
+						
+					
+					//}
+					}
+				}
 					
 			}
 			
@@ -150,7 +326,7 @@ if(strpos($map_id,"map_monde")==FALSE){
 		
 		}
 	}
-	if($_SESSION['map']['unit']!=NULL){					
+	/*if($_SESSION['map']['unit']!=NULL){					
 		foreach($_SESSION['map']['unit'] as $key => $value){
 			$im=imagecreatefrompng($_SERVER['DOCUMENT_ROOT'].$_SESSION['map']['unit'][$key]['path']);
 			
@@ -180,7 +356,7 @@ if(strpos($map_id,"map_monde")==FALSE){
 			
 		
 		}
-	}
+	}*/
 }
 /*if(isset($_GET['typeMap'])){
 	$image=imagecreatetruecolor(12,12);

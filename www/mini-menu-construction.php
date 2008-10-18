@@ -14,6 +14,8 @@ if(isset($_POST['type_menu'])){
 if( isset($_POST['change_onglet']) or !isset($_POST['item_start']) && isset($_POST['type_menu']) ){
 	if(substr($_POST['type_menu'],0,12)=='unit_control'){
 		$sql="SELECT id_action,nom_action from ".substr($_POST['type_menu'],0,12)." WHERE ".substr($_POST['type_menu'],0,12).".id_unit=(SELECT id from unit WHERE unit.nom='".substr($_POST['type_menu'],13)."')";
+		$_SESSION['map']['unitselected']['x']=$_POST['unit_x'];
+		$_SESSION['map']['unitselected']['y']=$_POST['unit_y'];
 	}
 	else{
 		$sql="SELECT id_".$_POST['type_menu'].",nom from dispo_".$_POST['type_menu'].",".$_POST['type_menu']." where dispo_".$_POST['type_menu'].".id_joueur=".$_SESSION['identify']['id']." and ".$_POST['type_menu'].".id=dispo_".$_POST['type_menu'].".id_".$_POST['type_menu'];
@@ -115,7 +117,7 @@ if(isset($_POST['type_menu'])){
 			echo "	<div id='".$_POST['type_menu']."_".$data[$i]['id_'.$_POST['type_menu']]."' class='construct_button' onclick=\"addUnit('".$data[$i]['id_'.$_POST['type_menu']]."',5000);\" ></div><div id='label_div_".$data[$i]['id_'.$_POST['type_menu']]."' class='label_div'></div>";
 		}
 		if(substr($_POST['type_menu'],0,12)=='unit_control'){
-			echo "	<div id='".$_POST['type_menu']."_".$data[$i]['id_action']."' class='construct_button' onclick=\"actionUnit('".$data[$i]['id_action']."');setHaloItem();\" onmouseover=\"selItem='".$_POST['type_menu']."_".$data[$i]['id_action']."';\" ><label>".$data[$i]['nom_action']."</label></div>";
+			echo "	<div id='unit_control_".$data[$i]['nom_action']."' class='construct_button' onclick=\"actionUnit('".$data[$i]['id_action']."');setHaloItem();\" onmouseover=\"selItem='unit_control_".$data[$i]['nom_action']."';\" ><label>".$data[$i]['nom_action']."</label></div>";
 		}
 	}
 	
